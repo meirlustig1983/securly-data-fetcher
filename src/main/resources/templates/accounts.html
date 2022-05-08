@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <title>Securly Project | Accounts</title>
+</head>
+<body>
+<div th:replace="header :: header"></div>
+<div class="container">
+    <h1 class="text-center">Accounts</h1>
+    <table class="table">
+        <thead>
+            <th scope="col">Account ID</th>
+            <th scope="col">Account Name</th>
+            <th scope="col">Time Zone</th>
+            <th scope="col">Workflow Sate</th>
+            <th scope="col">Courses</th>
+        </thead>
+        <tbody>
+            <tr th:each="account : ${accounts}">
+                <td th:text="${account.id}">Account ID</td>
+                <td th:text="${account.name}">Account Name</td>
+                <td th:text="${account.defaultTimeZone}">Time Zone</td>
+                <td th:text="${account.workflowState}">Workflow Sate</td>
+                <td>
+                    <a class="btn btn-primary" href="#" th:href="@{/courses/findByAccountId/{id}(id=${account.id})}">Courses</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+</body>
+</html>

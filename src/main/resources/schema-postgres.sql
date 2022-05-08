@@ -1,0 +1,108 @@
+CREATE TABLE IF NOT EXISTS accounts
+(
+    account_id                     BIGSERIAL PRIMARY KEY,
+    name                           VARCHAR(255) NOT NULL,
+    uuid                           VARCHAR(255),
+    parent_account_id              INT,
+    root_account_id                INT,
+    default_storage_quota_mb       INT,
+    default_user_storage_quota_mb  INT,
+    default_group_storage_quota_mb INT,
+    default_time_zone              VARCHAR(255),
+    sis_account_id                 VARCHAR(255),
+    integration_id                 VARCHAR(255),
+    sis_import_id                  VARCHAR(255),
+    lti_guid                       VARCHAR(255),
+    workflow_state                 VARCHAR(255)
+);
+
+CREATE TABLE IF NOT EXISTS courses
+(
+    course_id                      BIGSERIAL PRIMARY KEY,
+    sis_course_id                  VARCHAR(255),
+    uuid                           VARCHAR(255),
+    integration_id                 VARCHAR(255),
+    sis_import_id                  VARCHAR(255),
+    name                           VARCHAR(512) NOT NULL,
+    course_code                    VARCHAR(512),
+    original_name                  VARCHAR(512),
+    workflow_state                 VARCHAR(255),
+    account_id                     INT,
+    root_account_id                INT,
+    enrollment_term_id             INT,
+    grading_periods                VARCHAR(255),
+    grading_standard_id            INT,
+    grade_passback_setting         VARCHAR(255),
+    created_at                     DATE,
+    start_at                       DATE,
+    end_at                         DATE,
+    locale                         VARCHAR(255),
+    enrollments                    VARCHAR(255),
+    total_students                 INT,
+    calendar                       VARCHAR(255),
+    default_view                   VARCHAR(255),
+    syllabus_body                  VARCHAR(255),
+    needs_grading_count            INT,
+    term                           VARCHAR(255),
+    course_progress                VARCHAR(255),
+    apply_assignment_group_weights BOOLEAN,
+    permissions                    VARCHAR(255),
+    is_public                      BOOLEAN,
+    is_public_to_auth_users        BOOLEAN,
+    public_syllabus                BOOLEAN,
+    public_syllabus_to_auth        BOOLEAN,
+    public_description             VARCHAR(255),
+    storage_quota_mb               INT,
+    storage_quota_used_mb          INT,
+    hide_final_grades              BOOLEAN,
+    license                        VARCHAR(255),
+    allow_student_assignment_edits BOOLEAN,
+    allow_wiki_comments            BOOLEAN,
+    allow_student_forum_attachments  BOOLEAN,
+    open_enrollment                BOOLEAN,
+    self_enrollment                BOOLEAN,
+    restrict_enrollments_to_course_dates BOOLEAN,
+    course_format                  VARCHAR(255),
+    access_restricted_by_date      BOOLEAN,
+    time_zone                      VARCHAR(255),
+    blueprint                      BOOLEAN,
+    blueprint_restrictions         VARCHAR(255),
+    blueprint_restrictions_by_object_type VARCHAR(255),
+    template                       BOOLEAN
+);
+
+CREATE TABLE IF NOT EXISTS sections
+(
+    section_id                     BIGSERIAL PRIMARY KEY,
+    name                           VARCHAR(255) NOT NULL,
+    sis_section_id                 VARCHAR(255),
+    integration_id                 VARCHAR(255),
+    sis_import_id                  VARCHAR(255),
+    course_id                      INT,
+    sis_course_id                  VARCHAR(255),
+    start_at                       DATE,
+    end_at                         DATE,
+    created_at                     DATE,
+    restrict_enrollments_to_section_dates VARCHAR(255),
+    nonxlist_course_id             INT,
+    total_students                 INT
+);
+
+
+CREATE TABLE IF NOT EXISTS syncs
+(
+    sync_id                     BIGSERIAL PRIMARY KEY,
+    create_date                 timestamp not null default CURRENT_TIMESTAMP,
+    accounts_exists             INT,
+    accounts_new                INT,
+    accounts_updated            INT,
+    accounts_deleted            INT,
+    courses_exists              INT,
+    courses_new                 INT,
+    courses_updated             INT,
+    courses_deleted             INT,
+    sections_exists             INT,
+    sections_new                INT,
+    sections_updated            INT,
+    sections_deleted            INT
+);
